@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart'; // Necesario para TapGestureRecognizer
+import 'package:appejemplo/widgets/login/registrar.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -150,18 +151,6 @@ class Login extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class Registrar extends StatelessWidget {
-  const Registrar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Registrar")),
-      body: Center(child: Text("Formulario de registro")),
     );
   }
 }
