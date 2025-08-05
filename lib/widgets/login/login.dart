@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart'; // Necesario para TapGestureRecognizer
+import 'package:flutter/gestures.dart';
 import 'package:appejemplo/widgets/login/registrar.dart';
+import 'package:appejemplo/widgets/login/recuperar.dart'; // <-- Asegúrate de que esta ruta sea correcta
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -37,7 +38,7 @@ class Login extends StatelessWidget {
                       children: [
                         TextFormField(
                           decoration: InputDecoration(
-                            hintText: 'Phone',
+                            hintText: 'identificacion',
                             filled: true,
                             fillColor: const Color(0xFFF5FCF9),
                             contentPadding: const EdgeInsets.symmetric(
@@ -59,7 +60,7 @@ class Login extends StatelessWidget {
                           child: TextFormField(
                             obscureText: true,
                             decoration: InputDecoration(
-                              hintText: 'Password',
+                              hintText: 'clave',
                               filled: true,
                               fillColor: const Color(0xFFF5FCF9),
                               contentPadding: const EdgeInsets.symmetric(
@@ -80,7 +81,7 @@ class Login extends StatelessWidget {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              // Navegar a la pantalla principal
+                              // Aquí puedes navegar a tu pantalla principal
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -90,31 +91,42 @@ class Login extends StatelessWidget {
                             minimumSize: const Size(double.infinity, 48),
                             shape: const StadiumBorder(),
                           ),
-                          child: const Text("Sign in"),
+                          child: const Text("Iniciar Sesión"),
                         ),
                         const SizedBox(height: 16.0),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Forgot Password?',
-                            style: Theme.of(context).textTheme.bodyMedium!
-                                .copyWith(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .color!
-                                      .withAlpha((0.64 * 255).toInt()),
-                                ),
-                          ),
-                        ),
+
+                        // Botón: ¿Olvidaste tu clave?
                         TextButton(
                           onPressed: () {},
                           child: Text.rich(
                             TextSpan(
-                              text: "Don’t have an account? ",
+                              text: '¿Olvidaste tu clave?',
+                              style: const TextStyle(
+                                color: Color(0xFF00BF6D),
+                                fontWeight: FontWeight.bold,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Recuperar(),
+                                    ),
+                                  );
+                                },
+                            ),
+                          ),
+                        ),
+
+                        // Botón: Sign Up
+                        TextButton(
+                          onPressed: () {},
+                          child: Text.rich(
+                            TextSpan(
+                              text: "¿No te encuentras registrado? ",
                               children: [
                                 TextSpan(
-                                  text: "Sign Up",
+                                  text: "Registrate",
                                   style: const TextStyle(
                                     color: Color(0xFF00BF6D),
                                     fontWeight: FontWeight.bold,
