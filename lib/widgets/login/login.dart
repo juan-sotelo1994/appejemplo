@@ -1,12 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'package:appejemplo/widgets/login/registrar.dart';
-import 'package:appejemplo/widgets/login/recuperar.dart'; // <-- Asegúrate de que esta ruta sea correcta
 
-class Login extends StatelessWidget {
+import 'package:appejemplo/widgets/login/registrar.dart';
+import 'package:appejemplo/widgets/login/recuperar.dart';
+import 'package:appejemplo/widgets/menuprincipal/menuprincipal.dart'; // Asegúrate que exista
+
+class Login extends StatefulWidget {
   const Login({super.key});
 
-  static final _formKey = GlobalKey<FormState>();
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _isPasswordVisible = false;
+
+  void _validateLogin() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email == 'Jdsotelo@gmail.com' && password == '123456') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('¡Inicio de sesión exitoso!')),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Menuprincipal()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Correo o clave incorrecta')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +66,7 @@ class Login extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                             hintText: 'identificacion',
                             filled: true,
@@ -52,13 +82,13 @@ class Login extends StatelessWidget {
                               ),
                             ),
                           ),
-                          keyboardType: TextInputType.phone,
-                          onSaved: (phone) {},
+                          keyboardType: TextInputType.emailAddress,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: TextFormField(
-                            obscureText: true,
+                            controller: _passwordController,
+                            obscureText: !_isPasswordVisible,
                             decoration: InputDecoration(
                               hintText: 'clave',
                               filled: true,
@@ -73,17 +103,23 @@ class Login extends StatelessWidget {
                                   Radius.circular(50),
                                 ),
                               ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isPasswordVisible = !_isPasswordVisible;
+                                  });
+                                },
+                              ),
                             ),
-                            onSaved: (password) {},
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              // Aquí puedes navegar a tu pantalla principal
-                            }
-                          },
+                          onPressed: _validateLogin,
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: const Color(0xFF00BF6D),
@@ -97,7 +133,14 @@ class Login extends StatelessWidget {
 
                         // Botón: ¿Olvidaste tu clave?
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Recuperar(),
+                              ),
+                            );
+                          },
                           child: Text.rich(
                             TextSpan(
                               text: '¿Olvidaste tu clave?',
@@ -105,22 +148,20 @@ class Login extends StatelessWidget {
                                 color: Color(0xFF00BF6D),
                                 fontWeight: FontWeight.bold,
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Recuperar(),
-                                    ),
-                                  );
-                                },
                             ),
                           ),
                         ),
 
                         // Botón: Sign Up
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Registrar(),
+                              ),
+                            );
+                          },
                           child: Text.rich(
                             TextSpan(
                               text: "¿No te encuentras registrado? ",
@@ -131,16 +172,6 @@ class Login extends StatelessWidget {
                                     color: Color(0xFF00BF6D),
                                     fontWeight: FontWeight.bold,
                                   ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Registrar(),
-                                        ),
-                                      );
-                                    },
                                 ),
                               ],
                             ),
