@@ -1,4 +1,4 @@
-import 'package:appejemplo/widgets/menuprincipal/menuprincipal.dart';
+import 'package:appejemplo/widgets/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
@@ -14,7 +14,7 @@ class Animacion extends StatelessWidget {
         splash: 'assets/animacion/lego.gif',
         splashIconSize: 2000.0,
         centered: true,
-        nextScreen: const Menuprincipal(),
+        nextScreen: const Login(),
         backgroundColor: Colors.white,
         duration: 8000,
       ),

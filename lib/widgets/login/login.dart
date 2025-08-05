@@ -1,28 +1,167 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart'; // Necesario para TapGestureRecognizer
 
 class Login extends StatelessWidget {
   const Login({super.key});
 
+  static final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/animacion/lego.png', width: 80.0),
-            const Text(
-              'Welcome to the LEGO App',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 55.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  SizedBox(height: constraints.maxHeight * 0.1),
+                  Image.network(
+                    "https://i.postimg.cc/nz0YBQcH/Logo-light.png",
+                    height: 100,
+                  ),
+                  SizedBox(height: constraints.maxHeight * 0.1),
+                  Text(
+                    "Sign In",
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: constraints.maxHeight * 0.05),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Phone',
+                            filled: true,
+                            fillColor: const Color(0xFFF5FCF9),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 24.0,
+                              vertical: 16.0,
+                            ),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(50),
+                              ),
+                            ),
+                          ),
+                          keyboardType: TextInputType.phone,
+                          onSaved: (phone) {},
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: TextFormField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              hintText: 'Password',
+                              filled: true,
+                              fillColor: const Color(0xFFF5FCF9),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 24.0,
+                                vertical: 16.0,
+                              ),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(50),
+                                ),
+                              ),
+                            ),
+                            onSaved: (password) {},
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              // Navegar a la pantalla principal
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: const Color(0xFF00BF6D),
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(double.infinity, 48),
+                            shape: const StadiumBorder(),
+                          ),
+                          child: const Text("Sign in"),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Forgot Password?',
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .color!
+                                      .withAlpha((0.64 * 255).toInt()),
+                                ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text.rich(
+                            TextSpan(
+                              text: "Don’t have an account? ",
+                              children: [
+                                TextSpan(
+                                  text: "Sign Up",
+                                  style: const TextStyle(
+                                    color: Color(0xFF00BF6D),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Registrar(),
+                                        ),
+                                      );
+                                    },
+                                ),
+                              ],
+                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .color!
+                                      .withAlpha((0.64 * 255).toInt()),
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
+    );
+  }
+}
+
+class Registrar extends StatelessWidget {
+  const Registrar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Registrar")),
+      body: Center(child: Text("Formulario de registro")),
     );
   }
 }
