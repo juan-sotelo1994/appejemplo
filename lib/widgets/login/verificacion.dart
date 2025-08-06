@@ -20,7 +20,7 @@ class Verificacion extends StatelessWidget {
                 children: [
                   const SizedBox(height: 16),
                   const Text(
-                    "Codigo Verificacion",
+                    "Código de Verificación",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 24,
@@ -105,7 +105,7 @@ class OtpForm extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Nuevopass()),
+                MaterialPageRoute(builder: (context) => Nuevopass()),
               );
             },
             style: ElevatedButton.styleFrom(
