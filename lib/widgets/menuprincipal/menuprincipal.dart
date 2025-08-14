@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:circular_menu/circular_menu.dart';
+import 'package:appejemplo/widgets/configuracion/configuracion.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,9 @@ class Menuprincipal extends StatefulWidget {
 }
 
 class _MenuprincipalState extends State<Menuprincipal> {
+  // Clave para controlar el menú circular
+  final GlobalKey<CircularMenuState> _menuKey = GlobalKey<CircularMenuState>();
+
   Color _color = const Color.fromARGB(255, 255, 255, 255);
   String _colorName = '';
 
@@ -37,10 +41,9 @@ class _MenuprincipalState extends State<Menuprincipal> {
         title: const Text('Menu'),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 100,
-        ), // Subir 50px, ajusta según necesites
+        padding: const EdgeInsets.only(bottom: 100),
         child: CircularMenu(
+          key: _menuKey, // importante: asignar la clave
           alignment: Alignment.bottomCenter,
           backgroundWidget: Center(
             child: RichText(
@@ -69,6 +72,8 @@ class _MenuprincipalState extends State<Menuprincipal> {
                   _color = Colors.green;
                   _colorName = 'Green';
                 });
+                // Si quieres, puedes cerrar el menú tras elegir
+                // _menuKey.currentState?.reverseAnimation();
               },
             ),
             CircularMenuItem(
@@ -84,11 +89,14 @@ class _MenuprincipalState extends State<Menuprincipal> {
             CircularMenuItem(
               icon: Icons.settings,
               color: Colors.orange,
-              onTap: () {
-                setState(() {
-                  _color = Colors.orange;
-                  _colorName = 'Orange';
-                });
+              onTap: () async {
+                // Navegar y esperar a que se cierre la pantalla
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const Configuracion()),
+                );
+                // Al volver, cerramos el menú (si estaba abierto, se cierra; si no, no pasa nada)
+                _menuKey.currentState?.reverseAnimation();
               },
             ),
             CircularMenuItem(
