@@ -41,7 +41,7 @@ class _MenuprincipalState extends State<Menuprincipal> {
         title: const Text('Menu'),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 100),
+        padding: const EdgeInsets.only(bottom: 350),
         child: CircularMenu(
           key: _menuKey, // importante: asignar la clave
           alignment: Alignment.bottomCenter,
@@ -109,6 +109,34 @@ class _MenuprincipalState extends State<Menuprincipal> {
                 });
               },
             ),
+            CircularMenuItem(
+              icon: Icons.notifications,
+              color: Colors.brown,
+              onTap: () {
+                setState(() {
+                  _color = Colors.brown;
+                  _colorName = 'Brown';
+                });
+              },
+            ),
+            CircularMenuItem(
+              icon: Icons.notifications,
+              color: Colors.brown,
+              onTap: () {
+                setState(() {
+                  _color = Colors.brown;
+                  _colorName = 'Brown';
+                });
+              },
+            ),
+            CircularMenuItem(
+              icon: Icons.logout,
+              color: const Color.fromARGB(255, 251, 69, 3),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
+
             CircularMenuItem(
               icon: Icons.notifications,
               color: Colors.brown,
